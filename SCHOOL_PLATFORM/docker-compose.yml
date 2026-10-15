@@ -1,0 +1,37 @@
+name: school-platform
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: school
+      POSTGRES_USER: school
+      POSTGRES_PASSWORD: school
+    volumes: [school-postgres:/var/lib/postgresql/data]
+    healthcheck: {test: ["CMD-SHELL", "pg_isready -U school"], interval: 5s, timeout: 3s, retries: 20}
+    ports: ["5432:5432"]
+  api:
+    build: ./apps/admin-api
+    environment:
+      ENVIRONMENT: ${ENVIRONMENT:-development}
+      DATABASE_URL: ${DATABASE_URL:-postgresql+psycopg://school:school@postgres:5432/school}
+      JWT_SECRET: ${JWT_SECRET:-st-eric-secondary-school-norton-secret-key-change-in-prod}
+      JWT_ALGORITHM: ${JWT_ALGORITHM:-HS256}
+      CANVAS_BASE_URL: ${CANVAS_BASE_URL:-https://canvas.invalid}
+      CANVAS_ACCOUNT_ID: ${CANVAS_ACCOUNT_ID:-1}
+      CANVAS_ACCESS_TOKEN: ${CANVAS_ACCESS_TOKEN:-}
+      OIDC_ISSUER: ${OIDC_ISSUER:-https://identity.invalid}
+      OIDC_AUDIENCE: ${OIDC_AUDIENCE:-school-admin-api}
+      OIDC_JWKS_URL: ${OIDC_JWKS_URL:-https://identity.invalid/.well-known/jwks.json}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:5173}
+    depends_on: {postgres: {condition: service_healthy}}
+    ports: ["8000:8000"]
+    healthcheck: {test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health/live')"], interval: 10s, timeout: 3s, retries: 10}
+  web:
+    build:
+      context: ./apps/admin-web
+      args:
+        VITE_API_URL: ${VITE_API_URL:-http://localhost:8000}
+    depends_on: {api: {condition: service_healthy}}
+    ports: ["5173:8080"]
+volumes:
+  school-postgres:

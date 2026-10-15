@@ -1,0 +1,8 @@
+:root {
+  --school-navy: #15324b;
+  --school-teal: #087e73;
+  --school-focus: #e3a52f;
+}
+/* Keep overrides semantic and minimal. Do not use CSS to enforce permissions. */
+.ic-app-header { background-color: var(--school-navy); }
+:focus-visible { outline: 3px solid var(--school-focus); outline-offset: 2px; }

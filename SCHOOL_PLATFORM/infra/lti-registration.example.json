@@ -1,0 +1,16 @@
+{
+  "title": "School Tools",
+  "description": "Institutional tools embedded in Canvas",
+  "oidc_initiation_url": "https://tools.example.edu/lti/login",
+  "target_link_uri": "https://tools.example.edu/lti/launch",
+  "scopes": [
+    "https://purl.imsglobal.org/spec/lti-ags/scope/lineitem.readonly",
+    "https://purl.imsglobal.org/spec/lti-nrps/scope/contextmembership.readonly"
+  ],
+  "extensions": [{
+    "platform": "canvas.instructure.com",
+    "settings": {"placements": [{"placement": "course_navigation", "message_type": "LtiResourceLinkRequest", "target_link_uri": "https://tools.example.edu/lti/launch/course"}]},
+    "privacy_level": "name_only"
+  }],
+  "public_jwk_url": "https://tools.example.edu/.well-known/jwks.json"
+}
