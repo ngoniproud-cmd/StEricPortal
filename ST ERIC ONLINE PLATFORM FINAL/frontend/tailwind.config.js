@@ -1,0 +1,66 @@
+/** Brand tokens derived from the St Eric High School crest: navy blue shield + red flame. */
+export default {
+  content: ["./index.html", "./src/**/*.{ts,tsx}"],
+  theme: {
+    extend: {
+      colors: {
+        navy: {
+          50: "#f0f4fa",
+          100: "#dce6f4",
+          200: "#bdd0ea",
+          300: "#91b3dc",
+          400: "#5f90cb",
+          500: "#3d73b8",
+          600: "#2a599d",
+          700: "#1a3563",
+          800: "#122549",
+          900: "#0c1a35",
+          950: "#071022",
+        },
+        crimson: {
+          50: "#fef2f2",
+          100: "#fde3e3",
+          200: "#fccbcb",
+          300: "#f9a3a3",
+          400: "#f47272",
+          500: "#e84545",
+          600: "#c41e2a",
+          700: "#a31822",
+          800: "#87181f",
+          900: "#711a20",
+        },
+        gold: {
+          50: "#fdf9ef",
+          100: "#f8edd0",
+          200: "#f0d89e",
+          300: "#e6bf64",
+          400: "#dba83a",
+          500: "#c48e24",
+          600: "#a56f1b",
+          700: "#865316",
+        },
+        ink: "#0f172a",
+        mute: "#64748b",
+        line: "#e2e8f0",
+        paper: "#f8fafc",
+      },
+      fontFamily: {
+        sans: ["'Inter'", "system-ui", "-apple-system", "BlinkMacSystemFont", "'Segoe UI'", "Roboto", "Helvetica", "Arial", "sans-serif"],
+        display: ["'Inter'", "system-ui", "-apple-system", "BlinkMacSystemFont", "'Segoe UI'", "sans-serif"],
+      },
+      borderRadius: {
+        xl: "12px",
+        "2xl": "16px",
+        "3xl": "24px",
+      },
+      boxShadow: {
+        "2xs": "0 1px 2px rgba(15, 23, 42, 0.03)",
+        xs: "0 1px 2px rgba(15, 23, 42, 0.04)",
+        card: "0 1px 3px rgba(15, 23, 42, 0.05), 0 6px 16px rgba(15, 23, 42, 0.03)",
+        elevated: "0 4px 16px rgba(15, 23, 42, 0.08), 0 16px 36px rgba(15, 23, 42, 0.05)",
+        glow: "0 0 20px rgba(26, 53, 99, 0.15)",
+      },
+    },
+  },
+  plugins: [],
+};

@@ -1,0 +1,39 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@page{size:A4;margin:14mm}
+body{font-family:"Liberation Sans",Arial,sans-serif;color:#1b2333;font-size:10.5pt}
+.head{border-bottom:3px solid #b8923a;padding-bottom:8px;text-align:center}
+.head h1{margin:0;font-size:20pt;color:#12284c;letter-spacing:.5px}
+.head p{margin:2px 0;color:#5b6577;font-size:9pt}
+.title{margin:12px 0 8px;text-align:center;font-weight:bold;letter-spacing:2px;color:#b8923a;font-size:10pt}
+.meta{width:100%;border-collapse:collapse;margin-bottom:10px}
+.meta td{padding:4px 6px;border-bottom:1px solid #e3e7ee}.meta td.k{color:#5b6577;width:18%}
+table.marks{width:100%;border-collapse:collapse}
+.marks th{background:#12284c;color:#fff;text-align:left;padding:7px;font-size:9.5pt}
+.marks td{padding:7px;border-bottom:1px solid #e3e7ee}
+.marks tr:nth-child(even) td{background:#f6f8fb}
+.g{font-weight:bold;text-align:center}.fail{color:#b42318}
+.sum{display:flex;gap:10px;margin:12px 0}
+.box{flex:1;border:1px solid #d5dbe6;border-radius:6px;padding:8px;text-align:center}
+.box b{display:block;font-size:16pt;color:#12284c}.box span{font-size:8.5pt;color:#5b6577}
+.cm{margin-top:8px;border:1px solid #d5dbe6;border-radius:6px;padding:8px;min-height:38px}
+.cm small{color:#5b6577;display:block;margin-bottom:3px}
+.key{font-size:8pt;color:#5b6577;margin-top:10px}
+.sig{margin-top:26px;display:flex;justify-content:space-between;font-size:9pt}
+.sig div{width:40%;border-top:1px solid #1b2333;padding-top:3px;text-align:center}
+</style></head><body>
+<div class="head"><h1>{{ school.SCHOOL_NAME }}</h1><p>{{ school.SCHOOL_ADDRESS }}</p><p>Tel: {{ school.SCHOOL_PHONE }}</p></div>
+<div class="title">TERM {{ term }} {{ year }} · STUDENT REPORT</div>
+<table class="meta"><tr><td class="k">Name</td><td><b>{{ student.full_name }}</b></td><td class="k">Admission No.</td><td>{{ student.admission_no }}</td></tr>
+<tr><td class="k">Class</td><td>{{ klass.name }} (Form {{ klass.form }})</td><td class="k">Level</td><td>{{ "A-Level" if level == "A" else "O-Level" }}</td></tr></table>
+<table class="marks"><tr><th>Subject</th><th style="width:12%">Mark %</th><th style="width:10%">Grade</th>{% if level == "A" %}<th style="width:10%">Points</th>{% endif %}<th>Remark</th></tr>
+{% for r in rows %}<tr><td>{{ r.subject }}</td><td>{{ r.percent }}</td><td class="g {{ '' if r.passed else 'fail' }}">{{ r.grade }}</td>{% if level == "A" %}<td class="g">{{ r.points }}</td>{% endif %}<td>{{ r.remark }}</td></tr>{% endfor %}</table>
+<div class="sum"><div class="box"><b>{{ overall }}%</b><span>Overall average</span></div>
+<div class="box"><b>{{ position or "–" }}{% if position %} / {{ class_size }}{% endif %}</b><span>Class position</span></div>
+<div class="box"><b>{{ rows|selectattr("passed")|list|length }} / {{ rows|length }}</b><span>Subjects passed</span></div></div>
+<div class="cm"><small>Class teacher's comment</small>{{ class_teacher_comment or "" }}</div>
+<div class="cm"><small>Headmaster's comment</small>{{ head_comment or "" }}</div>
+<div class="key"><b>ZIMSEC grade key ({{ "A-Level" if level == "A" else "O-Level" }}):</b>
+{% for b in bands %}{{ b.grade }} {{ b.min_pct }}–{{ b.max_pct }}%{{ " · " if not loop.last }}{% endfor %}</div>
+<div class="sig"><div>Class teacher</div><div>Headmaster / School stamp</div></div>
+<div style="margin-top:14px;display:flex;align-items:center;gap:8px;font-size:8pt;color:#5b6577"><img src="{{ qr }}" style="width:62px;height:62px"/><span>Scan to confirm this report is genuine.<br/>Reports without a valid scan result should not be accepted.</span></div>
+</body></html>

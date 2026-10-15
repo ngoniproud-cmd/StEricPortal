@@ -1,0 +1,48 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: steric
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-change_me}
+      POSTGRES_DB: steric
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U steric"]
+      interval: 5s
+      retries: 5
+
+  backend:
+    build: ./backend
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://steric:${DB_PASSWORD:-change_me}@db:5432/steric
+      SECRET_KEY: ${SECRET_KEY:-change_me_in_production}
+      CORS_ORIGINS: http://localhost,http://localhost:8080
+      ENVIRONMENT: production
+      UPLOAD_DIR: /data/uploads
+      PUBLIC_URL: ${PUBLIC_URL:-http://localhost:8080}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      FEE_SYSTEM_DB_URL: ${FEE_SYSTEM_DB_URL:-}
+      FEE_SYSTEM_QUERY: ${FEE_SYSTEM_QUERY:-}
+    volumes:
+      - uploads:/data/uploads
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    depends_on:
+      - backend
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+  uploads:

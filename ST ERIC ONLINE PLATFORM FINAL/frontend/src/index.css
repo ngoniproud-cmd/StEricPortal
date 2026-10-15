@@ -1,0 +1,157 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+  @apply bg-[#f8fafc] text-slate-800 antialiased;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+}
+
+/* Custom scrollbars: Clean modern scrollbars */
+aside, aside nav, .dark-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #1e3a6d #091529;
+}
+
+aside::-webkit-scrollbar, aside nav::-webkit-scrollbar, .dark-scroll::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+aside::-webkit-scrollbar-track, aside nav::-webkit-scrollbar-track, .dark-scroll::-webkit-scrollbar-track {
+  background: #091529 !important;
+}
+
+aside::-webkit-scrollbar-thumb, aside nav::-webkit-scrollbar-thumb, .dark-scroll::-webkit-scrollbar-thumb {
+  background: #1e3a6d !important;
+  border-radius: 9999px;
+}
+
+aside::-webkit-scrollbar-thumb:hover, aside nav::-webkit-scrollbar-thumb:hover, .dark-scroll::-webkit-scrollbar-thumb:hover {
+  background: #2b4a78 !important;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-enter {
+  animation: fadeIn 0.25s ease-out forwards;
+}
+
+@layer components {
+  .card {
+    @apply bg-white rounded-2xl border border-slate-200/80 transition-all duration-200;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04), 0 4px 14px rgba(15, 23, 42, 0.02);
+  }
+  .card:hover {
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.07), 0 12px 28px rgba(15, 23, 42, 0.04);
+    transform: translateY(-1px);
+  }
+  .card-static {
+    @apply bg-white rounded-2xl border border-slate-200/80;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04), 0 4px 14px rgba(15, 23, 42, 0.02);
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold tracking-tight transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-navy-500 focus-visible:ring-offset-2 disabled:opacity-50 cursor-pointer;
+  }
+  .btn-primary {
+    @apply btn text-white;
+    background: linear-gradient(135deg, #1a3563 0%, #2b4a78 100%);
+    box-shadow: 0 1px 3px rgba(26, 53, 99, 0.2);
+  }
+  .btn-primary:hover {
+    background: linear-gradient(135deg, #122647 0%, #1a3563 100%);
+    box-shadow: 0 4px 12px rgba(26, 53, 99, 0.25);
+  }
+  .btn-accent {
+    @apply btn text-white;
+    background: linear-gradient(135deg, #c41e2a 0%, #e84545 100%);
+    box-shadow: 0 1px 3px rgba(196, 30, 42, 0.2);
+  }
+  .btn-accent:hover {
+    background: linear-gradient(135deg, #a31822 0%, #c41e2a 100%);
+    box-shadow: 0 4px 12px rgba(196, 30, 42, 0.25);
+  }
+  .btn-ghost {
+    @apply btn text-slate-700 hover:bg-slate-100/80;
+  }
+  .btn-outline {
+    @apply btn text-slate-700 border border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-300;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  }
+  .input {
+    @apply w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm font-medium text-slate-800 transition-all duration-150 placeholder:text-slate-400 focus:border-navy-600 focus:outline-none focus:ring-2 focus:ring-navy-100;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
+  }
+  .input:hover {
+    @apply border-slate-300;
+  }
+  .label {
+    @apply mb-1.5 block text-xs font-bold uppercase tracking-wider text-slate-500;
+  }
+  .hero-gradient {
+    background: linear-gradient(180deg, #091529 0%, #11254a 50%, #1a3563 100%);
+  }
+}
+
+/* High-quality print stylesheet */
+@media print {
+  body {
+    background: #ffffff !important;
+    background-image: none !important;
+    color: #000000 !important;
+    font-size: 10pt;
+  }
+  aside, nav, header, button, .print\:hidden {
+    display: none !important;
+  }
+  main {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .card, .card-static {
+    box-shadow: none !important;
+    border: 1px solid #d1d5db !important;
+    break-inside: avoid;
+  }
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+  }
+  th, td {
+    border: 1px solid #e5e7eb !important;
+    padding: 4px 8px !important;
+  }
+  @page {
+    size: A4;
+    margin: 12mm;
+  }
+}
